@@ -1,8 +1,9 @@
 import 'katex/dist/katex.min.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'react-notion-x/src/styles.css';
+import React from 'react';
 
-import { Language } from '@/config/languages';
+import { languages, type Language } from '@/config/languages';
 import Header from '@/components/header/header';
 import ScrollUpButton from '@/components/scroll-up-button';
 import '@/styles/globals.css';
