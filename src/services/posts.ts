@@ -1,19 +1,20 @@
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
 import { getBlurImage } from '@/utils/get-blur-image';
-import { ExtendedRecordMap, CollectionMap, BlockMap } from 'notion-types';
+import { ExtendedRecordMap, PropertyType, Collection, PageBlock } from 'notion-types';
 
-type NotionProperties = Record<string, any[]>;
-
-interface NotionPage {
-  type: string;
-  properties: NotionProperties;
-  content?: string[];
-  last_edited_time: number;
+interface NotionPropertyValue {
+  id: string;
+  type: PropertyType;
+  name: string;
 }
 
-interface NotionBlock {
-  value: NotionPage;
+interface NotionSchema {
+  [key: string]: NotionPropertyValue;
+}
+
+interface NotionProperties {
+  [key: string]: Array<[string] | [string, any[]]>;
 }
 
 export async function getAllPostsFromNotion() {
@@ -23,7 +24,7 @@ export async function getAllPostsFromNotion() {
   
   // Get the first collection's schema
   const collectionId = Object.keys(collection)[0];
-  const schema = collection[collectionId].value.schema;
+  const schema = collection[collectionId].value.schema as NotionSchema;
   const propertyMap: Record<string, string> = {};
 
   Object.keys(schema).forEach((key) => {
@@ -32,14 +33,15 @@ export async function getAllPostsFromNotion() {
 
   Object.keys(block).forEach((pageId) => {
     try {
-      const page = block[pageId].value;
+      const page = block[pageId].value as PageBlock;
+      const properties = page.properties as NotionProperties;
       
       if (
         page.type === 'page' &&
-        page.properties &&
-        page.properties[propertyMap['Slug']]
+        properties &&
+        properties[propertyMap['Slug']]
       ) {
-        const { properties, last_edited_time } = page;
+        const { last_edited_time } = page;
 
         // Debug log to see what properties we're working with
         console.log('Processing page:', pageId);
