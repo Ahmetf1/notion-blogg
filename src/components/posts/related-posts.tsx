@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { Language } from '@/config/languages';
 
 import PostCard from '@/components/posts/post-card';
 import { Post } from '@/types/post';
@@ -9,10 +9,8 @@ import { Post } from '@/types/post';
 const INITIAL_NUM_POSTS = 6;
 const ADDITIONAL_NUM_POSTS = 6;
 
-export default function RelatedPosts({ posts }: { posts: Post[] }) {
+export default function RelatedPosts({ posts, lang }: { posts: Post[]; lang: Language }) {
   const [numPosts, setNumPosts] = useState(INITIAL_NUM_POSTS);
-  const params = useParams();
-  const lang = params?.lang ?? 'en';
 
   const handleLoadMore = () => {
     setNumPosts((prevNumPosts) => prevNumPosts + ADDITIONAL_NUM_POSTS);
@@ -32,7 +30,7 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
             className="scale-[0.8] transition-all duration-300 hover:scale-[0.85]"
           >
             <li key={post.slug}>
-              <PostCard post={post} />
+              <PostCard post={post} lang={lang} />
             </li>
           </div>
         ))}

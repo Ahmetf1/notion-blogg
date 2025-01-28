@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Language } from '@/config/languages';
 import { getAllPostsFromNotion } from '@/services/posts';
+import NotFound from './not-found';
 
 export async function generateStaticParams() {
   const allPosts = await getAllPostsFromNotion();
@@ -24,7 +25,7 @@ export default async function BlogPost({
   );
 
   if (!post) {
-    notFound();
+    return <NotFound lang={lang} />;
   }
 
   // ... rest of your blog post rendering code ...
