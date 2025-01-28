@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
+import { useParams } from 'next/navigation';
+import { Language } from '@/config/languages';
 
 import Paginate from '@/components/paginate';
 import PostCard from '@/components/posts/post-card';
@@ -10,6 +12,8 @@ import { Post } from '@/types/post';
 export default function PostsGrid({ allPosts }: { allPosts: Post[] }) {
   const { posts, totalPages } = usePosts(allPosts);
   const rootRef = useRef<HTMLDivElement>(null);
+  const params = useParams();
+  const lang = (params?.lang as Language) ?? 'en';
 
   return (
     <section
@@ -23,7 +27,7 @@ export default function PostsGrid({ allPosts }: { allPosts: Post[] }) {
         >
           {posts.map((post) => (
             <li key={post.slug}>
-              <PostCard post={post} />
+              <PostCard post={post} lang={lang} />
             </li>
           ))}
         </ul>
