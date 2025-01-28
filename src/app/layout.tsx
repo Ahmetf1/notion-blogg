@@ -10,8 +10,8 @@ import '@/styles/paginate.css';
 
 export const metadata = {
   title: {
-    default: 'Jihoo Kim',
-    template: '%s | Jihoo Kim',
+    default: 'Ahmet Furkan Akıncı',
+    template: '%s | Ahmet Furkan Akıncı',
   },
 };
 
