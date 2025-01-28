@@ -8,4 +8,5 @@ export type Post = {
   published: boolean;
   lastEditedAt: number;
   blurUrl?: string;
+  language: string;
 };

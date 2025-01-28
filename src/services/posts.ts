@@ -35,6 +35,7 @@ export async function getAllPostsFromNotion() {
       const cover = properties[propertyMap['Cover']][0][1][0][1];
       const date = properties[propertyMap['Date']][0][1][0][1]['start_date'];
       const published = properties[propertyMap['Published']][0][0] === 'Yes';
+      const language = properties.Language.select?.name ?? 'en';
 
       allPosts.push({
         id,
@@ -47,6 +48,7 @@ export async function getAllPostsFromNotion() {
         date,
         published,
         lastEditedAt,
+        language,
       });
     }
   });
