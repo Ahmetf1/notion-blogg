@@ -1,3 +1,7 @@
+import 'katex/dist/katex.min.css';
+import 'prismjs/themes/prism-tomorrow.css';
+import 'react-notion-x/src/styles.css';
+
 import { languages, type Language } from '@/config/languages';
 import Header from '@/components/header/header';
 import Provider from '@/components/provider';
@@ -8,6 +12,13 @@ import '@/styles/paginate.css';
 export async function generateStaticParams() {
   return Object.keys(languages).map((lang) => ({ lang }));
 }
+
+export const metadata = {
+  title: {
+    default: 'Ahmet Furkan Akıncı',
+    template: '%s | Ahmet Furkan Akıncı',
+  },
+};
 
 export default function RootLayout({
   children,
