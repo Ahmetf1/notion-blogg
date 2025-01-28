@@ -1,11 +1,29 @@
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
 import { getBlurImage } from '@/utils/get-blur-image';
+import { BlockMap, CollectionInstance } from 'notion-types';
+
+type NotionProperties = Record<string, any[]>;
+
+interface NotionPage {
+  type: string;
+  properties: NotionProperties;
+  content?: string[];
+  last_edited_time: number;
+}
+
+interface NotionBlock {
+  value: NotionPage;
+}
 
 export async function getAllPostsFromNotion() {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
-  const { block, collection } = recordMap;
+  const { block, collection } = recordMap as { 
+    block: Record<string, NotionBlock>,
+    collection: Record<string, CollectionInstance>
+  };
+  
   const schema = Object.values(collection)[0].value.schema;
   const propertyMap: Record<string, string> = {};
 
@@ -75,19 +93,17 @@ export async function getAllPostsFromNotion() {
         }
 
         try {
-          // Get the language property key from the property map
           const languageKey = propertyMap['Language'];
           if (!languageKey) {
             console.log('Language property not found in schema');
-            language = 'en'; // default to English if property not found
+            language = 'en';
           } else {
-            // Access the select value using Notion's property structure
             language = properties[languageKey]?.[0]?.[0] || 'en';
           }
           console.log('Language processed:', language);
         } catch (e) {
           console.error('Error processing Language:', e);
-          language = 'en'; // default to English on error
+          language = 'en';
         }
 
         // Only add the post if we have the required fields
