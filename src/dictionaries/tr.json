@@ -7,5 +7,13 @@
   "home": {
     "title": "Hoş Geldiniz",
     "description": "Bloguma hoş geldiniz"
+  },
+  "about": {
+    "title": "Hakkımda",
+    "description": "Ben kimim hakkında daha fazla bilgi edinin"
+  },
+  "contact": {
+    "title": "İletişim",
+    "description": "Benimle iletişime geçin"
   }
 } 

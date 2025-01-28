@@ -10,12 +10,12 @@ export async function generateMetadata({
   const dict = await getDictionary(lang);
   
   return {
-    title: `${dict.home.title} | Ahmet Furkan Akıncı`,
-    description: dict.home.description,
+    title: dict.contact.title,
+    description: dict.contact.description,
   };
 }
 
-export default async function HomePage({
+export default async function ContactPage({
   params: { lang },
 }: {
   params: { lang: Language };
@@ -24,8 +24,8 @@ export default async function HomePage({
 
   return (
     <div className="mt-12 text-center">
-      <h1 className="text-3xl font-bold">{dict.home.title}</h1>
-      <p className="mt-4">{dict.home.description}</p>
+      <h1 className="text-3xl font-bold">{dict.contact.title}</h1>
+      <p className="mt-4">{dict.contact.description}</p>
     </div>
   );
 } 

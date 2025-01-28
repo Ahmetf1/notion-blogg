@@ -11,6 +11,8 @@ export default function LanguageSelector() {
   const [currentLang, setCurrentLang] = useState<Language>('en');
 
   useEffect(() => {
+    if (!pathname) return;
+    
     const pathLang = pathname.split('/')[1] as Language;
     if (pathLang && pathLang in languages) {
       setCurrentLang(pathLang);
@@ -18,6 +20,8 @@ export default function LanguageSelector() {
   }, [pathname]);
 
   const handleLanguageChange = (lang: Language) => {
+    if (!pathname) return;
+    
     const newPath = pathname.replace(/^\/[a-z]{2}/, '');
     router.push(`/${lang}${newPath}`);
   };
