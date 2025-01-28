@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 
 import PostCard from '@/components/posts/post-card';
 import { Post } from '@/types/post';
@@ -10,6 +11,8 @@ const ADDITIONAL_NUM_POSTS = 6;
 
 export default function RelatedPosts({ posts }: { posts: Post[] }) {
   const [numPosts, setNumPosts] = useState(INITIAL_NUM_POSTS);
+  const params = useParams();
+  const lang = params?.lang ?? 'en';
 
   const handleLoadMore = () => {
     setNumPosts((prevNumPosts) => prevNumPosts + ADDITIONAL_NUM_POSTS);
