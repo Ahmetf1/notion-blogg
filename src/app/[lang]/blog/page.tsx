@@ -1,9 +1,9 @@
-import { Language } from '@/config/languages';
 import CategoryFilter from '@/components/filter/category-filter';
 import SearchBar from '@/components/filter/search-bar';
 import PostsGrid from '@/components/posts/posts-grid';
 import { getAllPostsFromNotion } from '@/services/posts';
 import { toUniqueArray } from '@/utils/to-unique-array';
+import { Language } from '@/config/languages';
 import { getDictionary } from '@/dictionaries';
 import { Metadata } from 'next';
 

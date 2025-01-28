@@ -2,9 +2,8 @@ import 'katex/dist/katex.min.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'react-notion-x/src/styles.css';
 
-import { languages, type Language } from '@/config/languages';
+import { Language } from '@/config/languages';
 import Header from '@/components/header/header';
-import Provider from '@/components/provider';
 import ScrollUpButton from '@/components/scroll-up-button';
 import '@/styles/globals.css';
 import '@/styles/paginate.css';
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function LangLayout({
   children,
   params: { lang },
 }: {
@@ -29,16 +28,12 @@ export default function RootLayout({
   params: { lang: Language };
 }) {
   return (
-    <html lang={lang} suppressHydrationWarning>
-      <body className="text-primary bg-primary relative mx-auto mb-20 flex w-full max-w-screen-xl flex-col px-[10vw] md:px-[5vw]">
-        <Provider>
-          <Header />
-          <main>{children}</main>
-          <div className="fixed bottom-12 right-10">
-            <ScrollUpButton />
-          </div>
-        </Provider>
-      </body>
-    </html>
+    <>
+      <Header />
+      <main>{children}</main>
+      <div className="fixed bottom-12 right-10">
+        <ScrollUpButton />
+      </div>
+    </>
   );
 } 
