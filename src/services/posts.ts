@@ -1,7 +1,7 @@
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
 import { getBlurImage } from '@/utils/get-blur-image';
-import { BlockMap, CollectionInstance } from 'notion-types';
+import { ExtendedRecordMap, CollectionMap, BlockMap } from 'notion-types';
 
 type NotionProperties = Record<string, any[]>;
 
@@ -19,12 +19,11 @@ interface NotionBlock {
 export async function getAllPostsFromNotion() {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
-  const { block, collection } = recordMap as { 
-    block: Record<string, NotionBlock>,
-    collection: Record<string, CollectionInstance>
-  };
+  const { block, collection } = recordMap as ExtendedRecordMap;
   
-  const schema = Object.values(collection)[0].value.schema;
+  // Get the first collection's schema
+  const collectionId = Object.keys(collection)[0];
+  const schema = collection[collectionId].value.schema;
   const propertyMap: Record<string, string> = {};
 
   Object.keys(schema).forEach((key) => {
