@@ -1,1 +1,11 @@
- 
+{
+  "nav": {
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "Welcome",
+    "description": "Welcome to my blog"
+  }
+} 

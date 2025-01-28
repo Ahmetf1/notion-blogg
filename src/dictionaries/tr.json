@@ -1,1 +1,11 @@
- 
+{
+  "nav": {
+    "blog": "Blog",
+    "about": "Hakkımda",
+    "contact": "İletişim"
+  },
+  "home": {
+    "title": "Hoş Geldiniz",
+    "description": "Bloguma hoş geldiniz"
+  }
+} 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import LanguageSelector from '@/components/language-selector';
 import NavLink from '@/components/header/nav-link';
 import ThemeToggle from '@/components/theme-toggle';
 
@@ -26,8 +27,11 @@ export default function Header() {
             </li>
           ))}
         </ul>
-        <div className="absolute right-[10vw] top-12 md:static">
-          <ThemeToggle />
+        <div className="flex items-center space-x-4">
+          <LanguageSelector />
+          <div className="absolute right-[10vw] top-12 md:static">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </nav>
