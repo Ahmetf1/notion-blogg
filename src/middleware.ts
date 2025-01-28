@@ -4,8 +4,14 @@ import type { NextRequest } from 'next/server';
 import { languages } from './config/languages';
 
 export function middleware(request: NextRequest) {
-  // Get the pathname of the request (e.g. /, /blog, /about...)
   const pathname = request.nextUrl.pathname;
+
+  // Check if the pathname is root
+  if (pathname === '/') {
+    const locale = request.headers.get('accept-language')?.split(',')[0].split('-')[0] || 'en';
+    const defaultLocale = locale in languages ? locale : 'en';
+    return NextResponse.redirect(new URL(`/${defaultLocale}`, request.url));
+  }
 
   // Check if the pathname starts with a locale
   const pathnameHasLocale = Object.keys(languages).some(
@@ -18,8 +24,6 @@ export function middleware(request: NextRequest) {
   const locale = request.headers.get('accept-language')?.split(',')[0].split('-')[0] || 'en';
   const defaultLocale = locale in languages ? locale : 'en';
 
-  // e.g. incoming request is /blog
-  // The new URL is now /en/blog
   return NextResponse.redirect(
     new URL(`/${defaultLocale}${pathname}`, request.url)
   );
