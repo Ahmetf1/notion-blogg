@@ -2,6 +2,7 @@ import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
 import { getBlurImage } from '@/utils/get-blur-image';
 import { ExtendedRecordMap, PropertyType, Collection, PageBlock } from 'notion-types';
+import { Language } from '@/config/languages';
 
 interface NotionPropertyValue {
   id: string;
@@ -146,17 +147,16 @@ export function getRelatedPosts(currentSlug: string, lang: Language) {
   if (!currentPost) return [];
 
   const posts = allPosts
-    .filter(post => post.language === lang) // Filter by language
-    .filter(post => post.slug !== currentSlug) // Exclude current post
-    .filter(post => post.published) // Only published posts
+    .filter(post => post.language === lang)
+    .filter(post => post.slug !== currentSlug)
+    .filter(post => post.published)
     .filter(post => 
-      // Posts that share at least one category
       post.categories.some(category => 
         currentPost.categories.includes(category)
       )
     )
-    .sort(() => Math.random() - 0.5) // Randomize order
-    .slice(0, 3); // Get top 3
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
 
   return posts;
 }
