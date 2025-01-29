@@ -1,5 +1,5 @@
 import { Language } from '@/config/languages';
-import { getAllPostsFromNotion } from '@/services/posts';
+import { getAllPostsFromNotion, getRelatedPosts } from '@/services/posts';
 import NotFound from './not-found';
 import NotionPage from '@/components/notion-page';
 import RelatedPosts from '@/components/posts/related-posts';
@@ -19,9 +19,9 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({
-  params: { lang, slug },
+  params: { slug, lang },
 }: {
-  params: { lang: Language; slug: string };
+  params: { slug: string; lang: Language };
 }) {
   const allPosts = await getAllPostsFromNotion();
   const post = allPosts.find(
@@ -32,12 +32,7 @@ export default async function BlogPost({
     return <NotFound lang={lang} />;
   }
 
-  const relatedPosts: Post[] = allPosts.filter(
-    (p) =>
-      p.slug !== slug &&
-      p.published &&
-      p.categories.some((v) => post.categories.includes(v))
-  );
+  const relatedPosts = getRelatedPosts(slug, lang);
 
   const recordMap = await getRecordMap(post.id);
 

@@ -138,3 +138,25 @@ export async function getAllPostsFromNotion() {
 
   return allPosts;
 }
+
+export function getRelatedPosts(currentSlug: string, lang: Language) {
+  const posts = getAllPosts()
+    .filter(post => post.language === lang) // Filter by language first
+    .filter(post => post.slug !== currentSlug) // Exclude current post
+    .sort(() => Math.random() - 0.5) // Randomize order
+    .slice(0, 3); // Get top 3
+
+  return posts;
+}
+
+// Also update getAllPosts if needed to support language filtering
+export function getAllPosts(lang?: Language) {
+  // ... existing code ...
+  
+  // Add language filter if lang parameter is provided
+  if (lang) {
+    return posts.filter(post => post.language === lang);
+  }
+  
+  return posts;
+}
