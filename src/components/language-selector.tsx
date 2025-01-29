@@ -1,47 +1,28 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { type Language } from '@/config/languages';
 
-import { languages, type Language } from '@/config/languages';
-
-export default function LanguageSelector() {
-  const router = useRouter();
+export default function LanguageSelector({ lang }: { lang: Language }) {
   const pathname = usePathname();
-  const [currentLang, setCurrentLang] = useState<Language>('en');
-
-  useEffect(() => {
-    if (!pathname) return;
-    
-    const pathLang = pathname.split('/')[1] as Language;
-    if (pathLang && pathLang in languages) {
-      setCurrentLang(pathLang);
-    }
-  }, [pathname]);
-
-  const handleLanguageChange = (lang: Language) => {
-    if (!pathname) return;
-    
-    const newPath = pathname.replace(/^\/[a-z]{2}/, '');
-    router.push(`/${lang}${newPath}`);
-  };
+  const pathSuffix = pathname ? pathname.substring(3) : '';
 
   return (
-    <div className="flex space-x-2">
-      {Object.entries(languages).map(([code, { name, flag }]) => (
-        <button
-          key={code}
-          onClick={() => handleLanguageChange(code as Language)}
-          className={`flex items-center space-x-1 rounded-md px-2 py-1 text-sm ${
-            currentLang === code
-              ? 'bg-red-500 text-white'
-              : 'hover:bg-gray-100 dark:hover:bg-gray-800'
-          }`}
-        >
-          <span>{flag}</span>
-          <span>{name}</span>
-        </button>
-      ))}
-    </div>
+    <nav className="fixed top-5 sm:right-5 right-16 text-sm font-light">
+      <Link 
+        href={`/en${pathSuffix}`} 
+        className={`transition-colors ${lang === 'en' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
+      >
+        EN
+      </Link>
+      <span className="mx-1.5 text-gray-300">·</span>
+      <Link 
+        href={`/tr${pathSuffix}`}
+        className={`transition-colors ${lang === 'tr' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
+      >
+        TR
+      </Link>
+    </nav>
   );
 } 
