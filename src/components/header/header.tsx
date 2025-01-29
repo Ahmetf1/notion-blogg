@@ -34,7 +34,7 @@ export default function Header({ lang }: HeaderProps) {
         </ul>
         <div className="flex items-center space-x-4">
           <LanguageSelector lang={lang} />
-          <div className="absolute right-[10vw] top-12 md:static">
+          <div className="absolute right-4 top-20 md:static md:right-auto md:top-auto">
             <ThemeToggle />
           </div>
         </div>
