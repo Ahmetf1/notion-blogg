@@ -140,9 +140,21 @@ export async function getAllPostsFromNotion() {
 }
 
 export function getRelatedPosts(currentSlug: string, lang: Language) {
-  const posts = getAllPosts()
-    .filter(post => post.language === lang) // Filter by language first
+  const allPosts = getAllPosts();
+  const currentPost = allPosts.find(post => post.slug === currentSlug);
+  
+  if (!currentPost) return [];
+
+  const posts = allPosts
+    .filter(post => post.language === lang) // Filter by language
     .filter(post => post.slug !== currentSlug) // Exclude current post
+    .filter(post => post.published) // Only published posts
+    .filter(post => 
+      // Posts that share at least one category
+      post.categories.some(category => 
+        currentPost.categories.includes(category)
+      )
+    )
     .sort(() => Math.random() - 0.5) // Randomize order
     .slice(0, 3); // Get top 3
 
