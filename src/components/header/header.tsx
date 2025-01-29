@@ -3,6 +3,7 @@ import Link from 'next/link';
 import LanguageSelector from '@/components/language-selector';
 import NavLink from '@/components/header/nav-link';
 import ThemeToggle from '@/components/theme-toggle';
+import { type Language } from '@/config/languages';
 
 const NAV_ITEMS = [
   { path: 'blog', name: 'Blog' },
@@ -10,7 +11,11 @@ const NAV_ITEMS = [
   { path: 'contact', name: 'Contact' },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  lang: Language;
+}
+
+export default function Header({ lang }: HeaderProps) {
   return (
     <nav className="flex flex-col justify-between py-12 md:flex-row">
       <Link href="/" className="self-start md:self-auto">
@@ -28,7 +33,7 @@ export default function Header() {
           ))}
         </ul>
         <div className="flex items-center space-x-4">
-          <LanguageSelector />
+          <LanguageSelector lang={lang} />
           <div className="absolute right-[10vw] top-12 md:static">
             <ThemeToggle />
           </div>

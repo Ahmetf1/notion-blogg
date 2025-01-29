@@ -31,10 +31,7 @@ export default function LangLayout({
 }) {
   return (
     <>
-      <Header />
-      <header>
-        <LanguageSelector lang={lang} />
-      </header>
+      <Header lang={lang} />
       <main>{children}</main>
       <div className="fixed bottom-12 right-10">
         <ScrollUpButton />
