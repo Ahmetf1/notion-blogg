@@ -18,7 +18,42 @@ interface NotionProperties {
   [key: string]: Array<[string] | [string, any[]]>;
 }
 
-export async function getAllPostsFromNotion() {
+let posts: Post[] = [];
+
+export function getAllPosts(lang?: Language): Post[] {
+  if (lang) {
+    return posts.filter(post => post.language === lang);
+  }
+  return posts;
+}
+
+export function getRelatedPosts(currentSlug: string, lang: Language): Post[] {
+  const allPosts = getAllPosts();
+  const currentPost = allPosts.find((post: Post) => post.slug === currentSlug);
+  
+  if (!currentPost) return [];
+
+  const relatedPosts = allPosts
+    .filter((post: Post) => post.language === lang)
+    .filter((post: Post) => post.slug !== currentSlug)
+    .filter((post: Post) => post.published)
+    .filter((post: Post) => 
+      post.categories.some(category => 
+        currentPost.categories.includes(category)
+      )
+    )
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
+
+  return relatedPosts;
+}
+
+export async function getAllPostsFromNotion(): Promise<Post[]> {
+  posts = await fetchPosts(); // Move the actual fetching logic to a separate function
+  return posts;
+}
+
+async function fetchPosts(): Promise<Post[]> {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
   const { block, collection } = recordMap as ExtendedRecordMap;
@@ -138,37 +173,4 @@ export async function getAllPostsFromNotion() {
   }
 
   return allPosts;
-}
-
-export function getRelatedPosts(currentSlug: string, lang: Language) {
-  const allPosts = getAllPosts();
-  const currentPost = allPosts.find(post => post.slug === currentSlug);
-  
-  if (!currentPost) return [];
-
-  const posts = allPosts
-    .filter(post => post.language === lang)
-    .filter(post => post.slug !== currentSlug)
-    .filter(post => post.published)
-    .filter(post => 
-      post.categories.some(category => 
-        currentPost.categories.includes(category)
-      )
-    )
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
-
-  return posts;
-}
-
-// Also update getAllPosts if needed to support language filtering
-export function getAllPosts(lang?: Language) {
-  // ... existing code ...
-  
-  // Add language filter if lang parameter is provided
-  if (lang) {
-    return posts.filter(post => post.language === lang);
-  }
-  
-  return posts;
 }
