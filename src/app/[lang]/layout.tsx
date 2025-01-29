@@ -31,21 +31,22 @@ export default function LangLayout({
   params: { lang: Language };
 }) {
   const pathname = usePathname();
+  const pathSuffix = pathname ? pathname.substring(3) : '';
 
   return (
     <>
       <Header />
       <header>
-        <nav className="fixed top-5 right-5 sm:right-5 right-16 text-sm font-light">
+        <nav className="fixed top-5 sm:right-5 right-16 text-sm font-light">
           <Link 
-            href={`/en${pathname.substring(3)}`} 
+            href={`/en${pathSuffix}`} 
             className={`transition-colors ${lang === 'en' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
           >
             EN
           </Link>
           <span className="mx-1.5 text-gray-300">·</span>
           <Link 
-            href={`/tr${pathname.substring(3)}`}
+            href={`/tr${pathSuffix}`}
             className={`transition-colors ${lang === 'tr' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
           >
             TR
