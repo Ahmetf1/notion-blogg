@@ -6,14 +6,14 @@
   },
   "home": {
     "title": "Welcome",
-    "description": "Welcome to my blog"
+    "description": "Welcome to my blog, where I share notes from my readings on articles and books. I also plan to share my trip stories and experiences."
   },
   "about": {
     "title": "About Me",
-    "description": "Learn more about who I am"
+    "description": "Currently, at Solace, I'm part of a talented team on a mission to create the world's best smart home experience. Previously, I worked in a research lab focused on AI and Machine Learning, participated in national and international UAV competitions. I hold a B.S. in Electrical and Electronics Engineering from Boğaziçi University and graduated from Kabataş High School. For more information, you can check my LinkedIn profile."
   },
   "contact": {
     "title": "Contact",
-    "description": "Get in touch with me"
+    "description": "You can contact me via email or LinkedIn.\n\n\n\n furkan.akinci@solace.com.tr"
   }
 } 
