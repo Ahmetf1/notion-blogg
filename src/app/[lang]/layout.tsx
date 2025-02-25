@@ -5,10 +5,10 @@ import React from 'react';
 import LanguageSelector from '@/components/language-selector';
 import Header from '@/components/header/header';
 import ScrollUpButton from '@/components/scroll-up-button';
+import AnalyticsTracker from '@/components/analytics-tracker';
 import '@/styles/globals.css';
 import '@/styles/paginate.css';
 import { Metadata } from 'next';
-
 import { languages, type Language } from '@/config/languages';
 
 export async function generateStaticParams() {
@@ -31,6 +31,7 @@ export default function LangLayout({
 }) {
   return (
     <>
+      <AnalyticsTracker />
       <Header lang={lang} />
       <main>{children}</main>
       <div className="fixed bottom-12 right-10">
